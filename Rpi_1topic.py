@@ -1,12 +1,6 @@
 import paho.mqtt.client as paho
 import time
-
-
-broker="192.168.1.103" #IP of your Raspberry Pi
-
-
-
-#define callback
+broker="192.168.X.X" #IP Address of the Broker-Raspberry Pi
 
 def on_message(client, userdata, message):
     
@@ -18,13 +12,9 @@ def on_message(client, userdata, message):
     f.write("\n")
     f.close()
     
-
-
 client= paho.Client("client-001")
 
 client.on_message=on_message
-
-
 
 print("connecting to broker ",broker)
 
@@ -32,6 +22,6 @@ client.connect(broker)
 
 print("subscribed")
 print("Writing to log file")
-client.subscribe("sensorREAD")
+client.subscribe("sensorREAD") #sensorREAD is the topic name
 
 client.loop_forever()
