@@ -1,6 +1,5 @@
+
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
- 
-//needed for library
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
@@ -9,30 +8,25 @@
  
 #define DHTPIN 5 // Digital pin connected to the DHT sensor GPIO 5 = D1
  
-#define DHTTYPE DHT22 // DHT 22 (AM2302)
+#define DHTTYPE DHT22 // DHT 22 
 
-const int UpdateInterval = 15 * 60 * 1000000;
+const int UpdateInterval = 15 * 60 * 1000000;// Deep Sleep is microseconds so for 15 minutes
 DHT dht(DHTPIN, DHTTYPE);
 
  
 unsigned long previousMillis = 0;
 unsigned long interval = 10000;
  
-const char* mqttServer = "192.168.1.103";
+const char* mqttServer = "192.168.X.X"; //IP Address of RPi
 const int mqttPort = 1883;
 
- 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
- 
 void setup() {
-  // put your setup code here, to run once:
+ //This code runs once after each Deep Sleep
   Serial.begin(115200);
-  //pinMode(LED,OUTPUT);
-  //digitalWrite(LED,LOW);
-  //WiFiManager
-  //Local intialization. Once its business is done, there is no need to keep it around
+ //Connecting to the available network without hardcoding the ssid and password
   WiFiManager wifiManager;
   wifiManager.autoConnect("AutoConnectAP");
 
