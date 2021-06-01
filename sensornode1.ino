@@ -7,8 +7,13 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>     
 
-#define DHTTYPE DHT22   // DHT22  (AM2302), AM2321
-const int UpdateInterval = 5 * 60 * 1000000;
+// DHT22
+#define DHTTYPE DHT22  
+const int DHTPin = 5;
+DHT dht(DHTPin, DHTTYPE);
+
+//15 minutes Deep Sleep in micro seconds
+const int UpdateInterval = 15 * 60 * 1000000;
 
 //Raspberry Pi IP address, so it connects to the MQTT broker
 const char* mqtt_server = "192.168.1.108";
@@ -17,13 +22,8 @@ const char* mqtt_server = "192.168.1.108";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// DHT Sensor
-const int DHTPin = 5;
-DHT dht(DHTPin, DHTTYPE);
-
-char data[80];
-
-void setup() {
+void setup() 
+{
   dht.begin();
   Serial.begin(115200);
   WiFiManager wifiManager;
@@ -31,30 +31,27 @@ void setup() {
   Serial.println("connected...");
  // setup_wifi();
   client.setServer(mqtt_server, 1883);
-
-  while (!client.connected()) {
+  while (!client.connected()) 
+  {
     Serial.println("Connecting to MQTT...");
- 
-    if (client.connect("Client1")) {
- 
-    Serial.println("connected");
- 
-    } else {
- 
+    if (client.connect("Client1")) 
+    {
+      Serial.println("connected");
+    } 
+    else
+    {
       Serial.print("failed with state ");
       Serial.print(client.state());
       delay(2000);
- 
     }
-    
   }
     
-    float t = dht.readTemperature();
-    float h = dht.readHumidity();
-    float m = analogRead(A0);
-    if (!isnan(h) && !isnan(t)) 
-    {
-      // Computes temperature values in Celsius
+   float t = dht.readTemperature();
+   float h = dht.readHumidity();
+   float m = analogRead(A0);
+   if (!isnan(h) && !isnan(t)) 
+   {
+    // Computes temperature values in Celsius
     float hic = dht.computeHeatIndex(t, h, false);
     static char temperatureTemp[7];
     dtostrf(hic, 6, 2, temperatureTemp);
@@ -80,8 +77,8 @@ void setup() {
     }
     delay(5000);
     ESP.deepSleep(UpdateInterval,WAKE_RF_DEFAULT);
-    
 }
+
 void loop() 
 {
   
