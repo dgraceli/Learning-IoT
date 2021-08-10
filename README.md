@@ -4,21 +4,35 @@ Working with ESP8266 | MQTT | RPi | NodeRED | influxDB I Grafana
 
 ## PROJECT DESCRIPTION
 This project helps us enhance automation in large plant fields, the designed system consists of a number Sensor Nodes, one Control Node and a Raspberry Pi. A Message Queue Telemetry Transport protocol is used for sending and receiving messages between the Nodes. Each Sensor Node consists of a ESP8266 and garden sensors interfaced to it, and the Control Node consists of ESP8266, relay, solenoid valve and an Ultrasonic Sensor. The Sensor Nodes are kept at definite places in the field. Having enabled deep sleep the ESP8266 in the Sensor Nodes wakes up at regular intervals publishes the sensor readings and goes back to sleep, enabling low power consumption. If the moisture level in the soil is low, The Control Node checks for water in the tank and turns on the Solenoid Valve. A Grafana web application is used to visualize and monitor the real time data. The complete setup aids in automating the entire process of monitoring and watering of plants in large fields or gardens.
-![](Images/Block Diagram.png)
+
+
+<img src="Images/Block Diagram.png">
 
 ## COMPONENTS REQUIRED
 •	Raspberry Pi3 Model B+
+
 •	SD card 
+
 •	ESP8266 Wi-Fi Module
+
 •	12V Solenoid Valve
+
 •	Tube for Solenoid Valve 
+
 •	DHT22 Humidity and Temperature Sensor
+
 •	Soil Moisture sensor
+
 •	Relay module
+
 •	Jumper wires
+
 •	3.7V 18650 2500mAh Li-Ion Battery 
+
 •	Li-Ion Battery Holder
+
 •	5V Step-Up Module Lithium Battery USB 
+
 •	USB Cable
 
 ## SOFTWARE
@@ -57,19 +71,31 @@ Link: [Steps to install Grafana](https://pimylifeup.com/raspberry-pi-grafana/)
 *sudo nano /etc/avahi/services/mosquitto.service*
 Paste the following text:
 
-<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-<service-group>
- <name replace-wildcards="yes">Mosquitto MQTT server on %h</name>
-  <service>
-   <type>_mqtt._tcp</type>
-   <port>1883</port>
-   <txt-record>info=Publish, Publish! Read all about it! mqtt.org</txt-record>
-  </service>
-</service-group>
+\<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+
+\<service-group>
+ 
+ \<name replace-wildcards="yes">Mosquitto MQTT server on %h</name>
+ 
+  \<service>
+   
+   \<type>_mqtt._tcp</type>
+   
+   \<port>1883</port>
+   
+   \<txt-record>info=Publish, Publish! Read all about it! mqtt.org</txt-record>
+   
+  \</service>
+ 
+\</service-group>
+
 
 Close the file
+
 *avahi-browse -a*
+
 To find the hostname for hostname.local
+
 *sudo cat /etc/hostname*
 
 
