@@ -1,8 +1,10 @@
 # Learning-IoT
 Working with ESP8266 | MQTT | RPi | NodeRED | influxDB I Grafana
+# *Plant Monitoring and Automation System*
 
 ## PROJECT DESCRIPTION
 This project helps us enhance automation in large plant fields, the designed system consists of a number Sensor Nodes, one Control Node and a Raspberry Pi. A Message Queue Telemetry Transport protocol is used for sending and receiving messages between the Nodes. Each Sensor Node consists of a ESP8266 and garden sensors interfaced to it, and the Control Node consists of ESP8266, relay, solenoid valve and an Ultrasonic Sensor. The Sensor Nodes are kept at definite places in the field. Having enabled deep sleep the ESP8266 in the Sensor Nodes wakes up at regular intervals publishes the sensor readings and goes back to sleep, enabling low power consumption. If the moisture level in the soil is low, The Control Node checks for water in the tank and turns on the Solenoid Valve. A Grafana web application is used to visualize and monitor the real time data. The complete setup aids in automating the entire process of monitoring and watering of plants in large fields or gardens.
+![](Images/Block Diagram.png)
 
 ## COMPONENTS REQUIRED
 •	Raspberry Pi3 Model B+
